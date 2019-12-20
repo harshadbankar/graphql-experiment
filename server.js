@@ -36,5 +36,9 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+app.get('*', (req, res) => {
+    res.type('.html');
+    res.sendFile('./apollo-experiment/dist/apollo-experiment/index.html');
+});
 app.listen(process.env.PORT || 4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
