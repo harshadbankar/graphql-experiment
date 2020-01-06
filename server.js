@@ -21,12 +21,12 @@ var root = {
     return [{
         _id: '123-erterter-1231231-eeeueue',
         id: 1,
-        name: 'test'
+        name: 'Dom'
     },
     {
         _id: 'wwwwww-555577-22299',
         id: 2,
-        name: 'demo'
+        name: 'Pom'
     }];
   }
 };
