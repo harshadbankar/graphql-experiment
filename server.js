@@ -9,25 +9,44 @@ var schema = buildSchema(`
     users: [User]
   }
   type User {
+    name: String
+    moreInfo: MoreInfo
+  }
+  type MoreInfo {
+    address: Address
+  }
+  type Address {
     _id: ID!
     id: Int
-    name: String
+    street: String
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 var root = {
   users: () => {
-    return [{
-        _id: '123-erterter-1231231-eeeueue',
-        id: 1,
-        name: 'Dom'
-    },
-    {
-        _id: 'wwwwww-555577-22299',
-        id: 2,
-        name: 'Pom'
-    }];
+    return [
+        {
+          name: 'Dom',
+          moreInfo: {
+            address: {
+              _id: '123-erterter-1231231-eeeueue',
+              id: 1,
+              street: 'Guess'
+            }
+          }
+        },
+        {
+          name: 'Pom',
+          moreInfo: {
+            address: {
+              _id: 'wwwwww-555577-22299',
+              id: 2,
+              street: 'Found id'
+            }
+          }
+        }
+        ];
   }
 };
 
