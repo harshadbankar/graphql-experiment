@@ -6,7 +6,11 @@ var cors = require('cors');
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    users: [User]
+    users: Users
+    user(id: ID!): User
+  }
+  type Users {
+    ids: [ID]!
   }
   type User {
     id: ID!
@@ -22,7 +26,7 @@ var schema = buildSchema(`
     country: String
   }
 `);
-var users = [
+const users = [
   {
     id: 'wekjkj-123123-tesdfsdfw-333',
     firstName: 'Dom',
@@ -50,7 +54,8 @@ var users = [
   ];
 // The root provides a resolver function for each API endpoint
 var root = {
-  users: () => users
+  users: () => { return { ids: users.map(user => user.id) }; },
+  user: (args) => { console.log('id: ',args.id); return  users.find(user => user.id === args.id); }
 };
 
 var app = express();
