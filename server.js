@@ -9,45 +9,48 @@ var schema = buildSchema(`
     users: [User]
   }
   type User {
-    name: String
-    moreInfo: MoreInfo
-  }
-  type MoreInfo {
+    id: ID!
+    firstName: String
+    lastName: String
     address: Address
   }
   type Address {
-    _id: ID!
-    id: Int
+    id: ID!
+    houseNumber: Int
     street: String
+    postalCode: String
+    country: String
   }
 `);
-
+var users = [
+  {
+    id: 'wekjkj-123123-tesdfsdfw-333',
+    firstName: 'Dom',
+    lastName: 'Ter',
+    address: {
+      id: '123-erterter-1231231-eeeueue',
+      houseNumber: 12,
+      street: 'angular',
+      postalCode: '1111QQ',
+      country: 'Netherlands'
+    }
+  },
+  {
+    id: 'itlermeer-2w2e23-6y6y6y-999',
+    firstName: 'Pom',
+    lastName: 'Ter',
+    address: {
+      id: '1111-rwrefwe-1231231-eeeueue',
+      houseNumber: 201,
+      street: 'apollo',
+      postalCode: '2222WW',
+      country: 'Netherlands'
+    }
+  }
+  ];
 // The root provides a resolver function for each API endpoint
 var root = {
-  users: () => {
-    return [
-        {
-          name: 'Dom',
-          moreInfo: {
-            address: {
-              _id: '123-erterter-1231231-eeeueue',
-              id: 1,
-              street: 'Guess'
-            }
-          }
-        },
-        {
-          name: 'Pom',
-          moreInfo: {
-            address: {
-              _id: 'wwwwww-555577-22299',
-              id: 2,
-              street: 'Found it'
-            }
-          }
-        }
-        ];
-  }
+  users: () => users
 };
 
 var app = express();
@@ -57,5 +60,9 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+app.get('/users',
+  function(req, res) {
+    res.json(users);
+  });
 app.listen(process.env.PORT || 4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
